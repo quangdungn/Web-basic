@@ -83,7 +83,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "<div class='card-header'><strong>$question_text</strong></div>";
             echo "<div class='card-body'>";
             foreach ($answers as $answer) {
-                $answer_value = substr($answer, 0, 1);
+                $answer_value = substr($answer, 0, 1); 
+                echo "<div class='form-check'>";
                 echo "<input class='form-check-input' type='radio' name='question" . ($index + 1) . "' value='$answer_value' id='q" . ($index + 1) . $answer_value . "'>";
                 echo "<label class='form-check-label' for='q" . ($index + 1) . $answer_value . "'>$answer</label>";
                 echo "</div>";
