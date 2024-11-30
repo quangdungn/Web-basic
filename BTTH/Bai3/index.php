@@ -1,19 +1,14 @@
 <?php
-// Đường dẫn tới file CSV
 $filename = "KTPM3.csv";
 
-// Mảng chứa dữ liệu sinh viên
 $sinhvien = [];
 
-// Mở file CSV và đọc dữ liệu
 if (($handle = fopen($filename, "r")) !== FALSE) {
-    // Đọc dòng đầu tiên (tiêu đề)
     $headers = fgetcsv($handle, 1000, ",");
-    $headers = array_map('trim', $headers); // Loại bỏ khoảng trắng thừa trong tiêu đề
+    $headers = array_map('trim', $headers);
 
-    // Đọc từng dòng dữ liệu
     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-        if (count($headers) == count($data)) { // Kiểm tra số lượng cột khớp
+        if (count($headers) == count($data)) { 
             $sinhvien[] = array_combine($headers, $data);
         }
     }
@@ -68,7 +63,6 @@ if (($handle = fopen($filename, "r")) !== FALSE) {
             </tbody>
         </table>
     </div>
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

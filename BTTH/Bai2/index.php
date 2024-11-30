@@ -1,14 +1,10 @@
 <?php
-// Đặt session_start() ngay đầu file
 session_start();
 
-// Kiểm tra nếu form được gửi
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Đọc file câu hỏi
     $filename = "questions.txt";
     $questions = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
-    // Xử lý câu hỏi và đáp án
     $quiz = [];
     $current_question = [];
     foreach ($questions as $line) {
@@ -24,7 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $quiz[] = $current_question;
     }
 
-    // Trích xuất đáp án
     $answers = [];
     foreach ($quiz as $question) {
         foreach ($question as $line) {
@@ -34,7 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Tính điểm
     $score = 0;
     foreach ($_POST as $key => $userAnswer) {
         $questionNumber = (int)filter_var($key, FILTER_SANITIZE_NUMBER_INT);
@@ -43,13 +37,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Lưu kết quả vào session
     $_SESSION['score'] = $score;
     $_SESSION['total'] = count($answers);
 
-    // Chuyển hướng sang trang kết quả
     header("Location: result.php");
-    exit(); // Thoát sau khi chuyển hướng
+    exit(); 
 }
 ?>
 <!DOCTYPE html>
@@ -65,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h1 class="text-center">Bài thi trắc nghiệm</h1>
     <form method="post" action="index.php">
         <?php
-        // Hiển thị câu hỏi
+
         $filename = "questions.txt";
         $questions = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
@@ -86,13 +78,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         foreach ($quiz as $index => $question) {
             $question_text = $question[0];
-            $answers = array_slice($question, 1, 4); // Lấy các đáp án
+            $answers = array_slice($question, 1, 4);
             echo "<div class='card mb-4'>";
             echo "<div class='card-header'><strong>$question_text</strong></div>";
             echo "<div class='card-body'>";
             foreach ($answers as $answer) {
-                $answer_value = substr($answer, 0, 1); // Lấy ký tự đầu (A, B, C, D)
-                echo "<div class='form-check'>";
+                $answer_value = substr($answer, 0, 1);
                 echo "<input class='form-check-input' type='radio' name='question" . ($index + 1) . "' value='$answer_value' id='q" . ($index + 1) . $answer_value . "'>";
                 echo "<label class='form-check-label' for='q" . ($index + 1) . $answer_value . "'>$answer</label>";
                 echo "</div>";
