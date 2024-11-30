@@ -1,5 +1,4 @@
 <?php
-// Đặt session_start() ngay đầu file
 session_start();
 ?>
 <!DOCTYPE html>
@@ -18,12 +17,10 @@ session_start();
         $score = $_SESSION['score'];
         $total = $_SESSION['total'];
 
-        // Hiển thị kết quả
         echo "<div class='alert alert-success text-center mt-4'>";
         echo "Bạn trả lời đúng <strong>$score</strong>/$total câu.";
         echo "</div>";
 
-        // Xóa session sau khi hiển thị
         session_destroy();
     } else {
         echo "<div class='alert alert-danger text-center mt-4'>Không có dữ liệu kết quả. Hãy làm bài kiểm tra trước.</div>";
